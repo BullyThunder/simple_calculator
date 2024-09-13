@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "sass": "sass --watch src/assets/css/scss:src/assets/css"
   },
   "dependencies": {
     "register-service-worker": "^1.7.2",

@@ -1,0 +1,15 @@
+.display {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.display__input {
+  border-radius: 5px;
+  height: 560px;
+  width: 100%;
+}
+.display__padding {
+  margin-bottom: 5px;
+}/*# sourceMappingURL=display.css.map */

@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.header__container {
+  max-width: 300px;
+  margin: 0px auto;
+}/*# sourceMappingURL=header.css.map */
