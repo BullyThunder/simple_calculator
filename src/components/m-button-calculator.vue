@@ -4,37 +4,45 @@
       <button class="calculator__btn" >C</button>
       <button class="calculator__btn" >DEL</button>
       <button class="calculator__btn" >/</button>
-      <button class="calculator__btn">*</button>
-      <button class="calculator__btn" >1</button>
-      <button class="calculator__btn" >2</button>
-      <button class="calculator__btn" >3</button>
+      <button class="calculator__btn" >*</button>
+      <button class="calculator__btn" @click="number_1">1</button>
+      <button class="calculator__btn" @click="number_2">2</button>
+      <button class="calculator__btn" @click="number_3">3</button>
       <button class="calculator__btn">-</button>
-      <button class="calculator__btn">4</button>
-      <button class="calculator__btn">5</button>
-      <button class="calculator__btn" >6</button>
+      <button class="calculator__btn" @click="number_4">4</button>
+      <button class="calculator__btn" @click="number_5">5</button>
+      <button class="calculator__btn" @click="number_6">6</button>
       <button class="calculator__btn">+</button>
-      <button class="calculator__btn" >7</button>
-      <button class="calculator__btn" >8</button>
-      <button class="calculator__btn" >9</button>
+      <button class="calculator__btn" @click="number_7">7</button>
+      <button class="calculator__btn" @click="number_8">8</button>
+      <button class="calculator__btn" @click="number_9">9</button>
       <button class="calculator__btn" >.</button>
-      <button class="calculator__btn" >0</button>
+      <button class="calculator__btn" @click="click_to_number_0">0</button>
       <button class="calculator__btn calculator__equals">=</button>
     </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const num_0 = ref(0);
-const num_1 = ref(1);
-const num_2 = ref(2);
-const num_3 = ref(3);
-const num_4 = ref(4);
-const num_5 = ref(5);
-const num_6 = ref(6);
-const num_7 = ref(7);
-const num_8 = ref(8);
-const num_9 = ref(9);
+import {useStore} from 'vuex';
+import {computed, ref} from 'vue';
+const store = useStore();
+const number_0 = computed(()=> store.getters.get_numbers('number_0'));
+const number_1 = computed(()=> store.getters.get_numbers('number_1'));
+const number_2 = computed(()=> store.getters.get_numbers('number_2'));
+const number_3 = computed(()=> store.getters.get_numbers('number_3'));
+const number_4 = computed(()=>  store.getters.get_numbers('number_4'));
+const number_5 = computed(()=> store.getters.get_numbers('number_5'));
+const number_6 = computed(()=> store.getters.get_numbers('number_6'));
+const number_7 = computed(()=> store.getters.get_numbers('number_7'));
+const number_8 = computed(()=> store.getters.get_numbers('number_8'));
+const number_9 = computed(()=> store.getters.get_numbers('number_9'));
+
+const click_to_number_0 = () =>(
+  store.commit('set_number',"number_0"),
+  store.dispatch('Update_Number', { key: 'number_0', value: 0 })
+)
+
 
 </script>
 
