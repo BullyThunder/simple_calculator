@@ -9,7 +9,8 @@
 <script setup>
 import Button_Calculator from "@/components/m-button-calculator.vue";
 import Display from "@/components/m-display.vue";
-import Text from "@/components/m-text.vue"
+
+
 </script>
 <style lang="scss">
 @import '@/assets/css/style.css';
