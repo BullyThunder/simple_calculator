@@ -1,6 +1,6 @@
 <template>
   <div  class="display display__padding">
-    <input v-model="show_number_0" class="display__input" type="text">
+    <input v-model="message" class="display__input" type="text">
   </div>
 </template>
 
@@ -8,14 +8,11 @@
 import {computed, ref} from 'vue';
 import {useStore} from 'vuex';
 const store = useStore();
-
-let show_number_0 = computed({
-  get(){
-    return store.getters.get_numbers
-  }
+const message = ref('')
+const receiveMessage =(newMessage) =>{
+  message.value  = newMessage;
 }
-)
- 
+defineExpose({ receiveMessage });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
