@@ -78,7 +78,7 @@ const calculate = () => {
     }
     emit('custom_number',result.value);
     state_of_operation.value = false;
-    result.value = first_Number.value;
+    first_Number.value = result.value;
     second_Number.value = null;
   }
 } 
