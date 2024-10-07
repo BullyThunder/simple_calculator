@@ -1,24 +1,24 @@
 <template>
     <div class="calculator">
         <div class="calculator__buttons">
-      <button class="calculator__btn" >C</button>
+      <button class="calculator__btn" @click="reset">C</button>
       <button class="calculator__btn" >DEL</button>
-      <button class="calculator__btn" >/</button>
-      <button class="calculator__btn" >*</button>
+      <button class="calculator__btn" @click="set_operation('/')">/</button>
+      <button class="calculator__btn" @click="set_operation('*')">*</button>
       <button class="calculator__btn" @click="click_to_number(1)">1</button>
       <button class="calculator__btn" @click="click_to_number(2)">2</button>
       <button class="calculator__btn" @click="click_to_number(3)">3</button>
-      <button class="calculator__btn">-</button>
+      <button class="calculator__btn" @click="set_operation('-')">-</button>
       <button class="calculator__btn" @click="click_to_number(4)">4</button>
       <button class="calculator__btn" @click="click_to_number(5)">5</button>
       <button class="calculator__btn" @click="click_to_number(6)">6</button>
-      <button class="calculator__btn" @click ="click_add(is_Adding)">+</button>
+      <button class="calculator__btn" @click ="set_operation('+')">+</button>
       <button class="calculator__btn" @click="click_to_number(7)">7</button>
       <button class="calculator__btn" @click="click_to_number(8)">8</button>
       <button class="calculator__btn" @click="click_to_number(9)">9</button>
       <button class="calculator__btn" >.</button>
       <button class="calculator__btn" @click="click_to_number(0)">0</button>
-      <button class="calculator__btn calculator__equals" @click = "equals(is_Equal)">=</button>
+      <button class="calculator__btn calculator__equals" @click = "calculate">=</button>
     </div>
     </div>
 </template>
@@ -28,35 +28,68 @@ import {useStore} from 'vuex';
 import {defineEmits, ref, watch} from 'vue';
 const store = useStore();
 
-const emit = defineEmits(['custom_number','result_add']);
-const result =0;
-const first_Number = ref(0);
-const second_Number = ref(0);
-const is_Adding = ref(false);
-const is_Equal = ref(false);
-const current_Number = ref(1);
-const click_add = () =>{
-  is_Adding.value = true;
-}
+const emit = defineEmits(['custom_number']);
+const result = ref(0);
+const first_Number = ref(null);
+const second_Number = ref(null);
+const operation = ref(null);
+const state_of_operation = ref(false);
 const click_to_number = (key) =>{
-  if(current_Number.value === 1 && is_Adding.value === false){
-  first_Number.value = key;
-  current_Number.value = ref(2);
-  is_Adding.value = true;
+  if(!state_of_operation.value ){
+    if(first_Number.value !== null){
+      first_Number.value = first_Number.value * 10 + key;
+    }
+    else {
+      first_Number.value= key;
+    }
+    emit('custom_number', first_Number.value);
   }
-  else if(is_Adding.value == true && current_Number.value === 2){
-  second_Number.value = key;
+  else if(state_of_operation.value){
+    if(second_Number.value !== null){
+      second_Number.value = second_Number.value * 10 + key;
+    }
+    else{
+      second_Number.value= key;
+    }
+    emit('custom_number', second_Number.value);
   }
-  emit('custom_number',first_Number.value);
 }
-
-
-watch(first_Number.value,(new_first_Number)=>{
-    console.log(new_first_Number);
-  });
-  watch(second_Number.value,(new_second_Number)=>{
-    console.log(new_second_Number);
-  });
+const set_operation = (symb) =>{
+  if(first_Number.value !== null){
+   operation.value = symb;
+   state_of_operation.value = true;
+  }
+}
+const calculate = () => {
+  if(first_Number.value !==null && second_Number.value !==null && state_of_operation.value === true){
+  switch(operation.value){
+    case '+':
+   result.value = first_Number.value + second_Number.value;
+    break;
+    case '-':
+    result.value = first_Number.value - second_Number.value;
+    break;
+    case '*':
+    result.value= first_Number.value * second_Number.value;
+    break;
+    case '+':
+    result.value =  first_Number.value / second_Number.value;
+    break;  
+    }
+    emit('custom_number',result.value);
+    state_of_operation.value = false;
+    result.value = first_Number.value;
+    second_Number.value = null;
+  }
+} 
+const reset = () =>{
+  first_Number.value = null;
+  second_Number.value = null;
+  operation.value = null;
+  result.value = null;
+  state_of_operation.value = false;
+  emit('custom_number',0);
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
